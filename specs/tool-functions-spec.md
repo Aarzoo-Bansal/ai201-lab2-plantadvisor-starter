@@ -70,7 +70,11 @@ likely match for clean user input. Aliases are the broadest net, so they go last
 *Aliases are stored as a list of strings. How will you check if the normalized input matches any alias in the list? Write your approach in pseudocode or plain English.*
 
 ```
-[your answer here]
+I would first create a index which maps the display name and aliases to the corresponding normalized name. 
+
+So suppose we have 'n' plants and each plant has a max of 'm' aliases, then the time complexity of creating this index would be O(mn).
+
+However, this index is created once and stored in memory, which makes the later searches O(1)
 ```
 
 ---
@@ -80,7 +84,10 @@ likely match for clean user input. Aliases are the broadest net, so they go last
 *When a plant isn't found, the agent will read your message and use it to decide what to tell the user. Write the exact string you'll return — make it useful to the agent, not just to a human reading logs.*
 
 ```
-[your answer here]
+{"found": False, "name": <original input>, "message": <helpful string>} in this output the message that I would pass is: 
+available = ", ".join(p["display_name"] for p in _plant_db.values())
+message = f"'{name}' was not found in the plant database. Available plants: {available}."
+
 ```
 
 ---
@@ -91,17 +98,19 @@ likely match for clean user input. Aliases are the broadest net, so they go last
 
 **Test: does `"devil's ivy"` return the pothos entry?**
 ```
-[yes / no — if no, describe what happened]
+yes
 ```
 
 **Test: does `"SNAKE PLANT"` return the snake plant entry?**
 ```
-[yes / no — if no, describe what happened]
+yes
 ```
 
 **One edge case you discovered while implementing:**
 ```
-[your answer here]
+1. System will never be able to match against a scientific name even if the plant is present.
+
+2. If the user does give plant name, or LLM doesn't pass plantname, then the system would return not found instead of error.
 ```
 
 ---
